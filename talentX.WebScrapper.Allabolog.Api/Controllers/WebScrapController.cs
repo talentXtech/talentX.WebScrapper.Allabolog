@@ -98,7 +98,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                     csvWriter.WriteRecords(data);
                 }
 
-                return File(memoryStream.ToArray(), "text/csv", $"AllabollagScrapper-{DateTime.Now.ToString("s")}.csv");
+                return File(memoryStream.ToArray(), "text/csv", $"AllabollagScrapper-{filterInput}{DateTime.Now.ToString("s")}.csv");
             }
         }
 
