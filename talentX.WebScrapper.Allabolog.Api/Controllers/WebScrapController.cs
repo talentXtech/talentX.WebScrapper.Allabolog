@@ -70,7 +70,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                 var listOfDataToGetDetailedScrapData = await _scrapDataRepo.ListOfurlsNotExistingInDb(initialScrappedData);
 
                 await ScrapingDetailedDataFromEachLink(listOfDataToGetDetailedScrapData, filterInput);
-                return Ok(initialScrappedData);
+                return Ok();
 
             }
             catch (Exception ex)
