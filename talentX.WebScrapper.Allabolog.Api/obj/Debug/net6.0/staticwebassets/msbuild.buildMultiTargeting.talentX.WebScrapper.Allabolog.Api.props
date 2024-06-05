@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\talentX.WebScrapper.Allabolog.Api.props" />
+</Project>

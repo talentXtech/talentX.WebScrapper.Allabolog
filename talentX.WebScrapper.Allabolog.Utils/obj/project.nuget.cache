@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "UmAnKwZWRlLSbKILi9OPbHJOpafoWvaEE30//9ktjMM4alxU3tbJsiEQg3gi+tPrrMxpRyeGB22sg+tgR8GKGg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Abinaya\\Desktop\\talentX_networkCurationProject\\talentX.WebScrapper.Allabolog\\talentX.WebScrapper.Allabolog.Utils\\talentX.WebScrapper.Allabolog.Utils.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Abinaya\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\Abinaya\\.nuget\\packages\\selenium.support\\4.21.0\\selenium.support.4.21.0.nupkg.sha512",
+    "C:\\Users\\Abinaya\\.nuget\\packages\\selenium.webdriver\\4.21.0\\selenium.webdriver.4.21.0.nupkg.sha512"
+  ],
+  "logs": []
+}
