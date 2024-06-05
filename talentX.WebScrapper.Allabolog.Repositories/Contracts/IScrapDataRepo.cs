@@ -11,7 +11,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Contracts
         Task AddDetailedScrapDataAsync(DetailedScrapOutputData outputData);
         Task DeleteDetailedScrapDataAsync();
         Task DeleteInitialScrapDataAsync();
-        Task<List<DetailedScrapOutputData>> FindAllDetailedScrapDataAsync();
+        Task<List<DetailedScrapOutputData>> FindAllDetailedScrapDataAsync(string? filterInput);
 
         Task<List<InitialScrapOutputData>> ListOfurlsNotExistingInDb(List<InitialScrapOutputData> outputDatas);
     }

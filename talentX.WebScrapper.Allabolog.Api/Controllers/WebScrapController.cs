@@ -6,6 +6,7 @@ using talentX.WebScrapper.Allabolog.Utils;
 using talentX.WebScrapper.Allabolog.Extensions;
 using CsvHelper;
 using OpenQA.Selenium.Chrome;
+using System;
 
 namespace talentX.WebScrapper.Allabolog.Api.Controllers
 {
@@ -64,12 +65,11 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                 driver.Quit();
 
                 var initialScrappedData = scrappedData.Where((x) => x.Url != null && x.Title != null).ToList();
-                await _scrapDataRepo.DeleteInitialScrapDataAsync();
                 await _scrapDataRepo.AddRangeInitialScrapDataAsync(initialScrappedData);
 
                 var listOfDataToGetDetailedScrapData = await _scrapDataRepo.ListOfurlsNotExistingInDb(initialScrappedData);
 
-                await ScrapingDetailedDataFromEachLink(listOfDataToGetDetailedScrapData);
+                await ScrapingDetailedDataFromEachLink(listOfDataToGetDetailedScrapData, filterInput);
                 return Ok(initialScrappedData);
 
             }
@@ -86,9 +86,9 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
         [HttpGet("GetScrapInfoAsCSV")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Produces("text/csv")]
-        public async Task<IActionResult> GetScrapInfoAsCSV()
+        public async Task<IActionResult> GetScrapInfoAsCSV(string? filterInput = null)
         {
-            var data = await _scrapDataRepo.FindAllDetailedScrapDataAsync();
+            var data = await _scrapDataRepo.FindAllDetailedScrapDataAsync(filterInput);
 
             using (var memoryStream = new MemoryStream())
             {
@@ -102,7 +102,39 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             }
         }
 
-        private async Task ScrapingDetailedDataFromEachLink(List<InitialScrapOutputData> finalScrappedDatas)
+        [HttpDelete("DeleteInitialScrapOutputData")]
+        public async Task<IActionResult> DeleteInitialScrapOutputData()
+        {
+            try
+            {
+                await _scrapDataRepo.DeleteInitialScrapDataAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return BadRequest(ex.Message);
+
+            }
+        }
+
+        [HttpDelete("DeleteDetailedScrapOutputData")]
+        public async Task<IActionResult> DeleteDetailedScrapOutputData()
+        {
+            try
+            {
+                await _scrapDataRepo.DeleteDetailedScrapDataAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return BadRequest(ex.Message);
+
+            }
+        }
+
+        private async Task ScrapingDetailedDataFromEachLink(List<InitialScrapOutputData> finalScrappedDatas, string filterInput)
         {
             ChromeDriver newDriver = null;
             foreach (var data in finalScrappedDatas)
@@ -130,6 +162,8 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                     var companyDetail = new DetailedScrapOutputData
                     {
                         CompanyName = data.Title,
+                        SearchFieldText = filterInput,
+                        DateOfSearch = DateTime.Now,
                         AllabolagUrl = data.Url,
                         OrgNo = orgnr,
                         CEO = ceo,
@@ -149,6 +183,8 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                     var companyDetail = new DetailedScrapOutputData
                     {
                         CompanyName = data.Title,
+                        SearchFieldText = filterInput,
+                        DateOfSearch = new DateTime(),
                         AllabolagUrl = data.Url,
                         OrgNo = "Issue with getting data",
                         CEO = "Issue with getting data",

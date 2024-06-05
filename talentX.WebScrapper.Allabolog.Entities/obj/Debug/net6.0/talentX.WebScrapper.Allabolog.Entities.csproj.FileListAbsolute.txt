@@ -20,3 +20,14 @@ C:\Users\Abinaya\Desktop\talentX.WebScrap\talentX.WebScrapper.Allabolog\talentX.
 C:\Users\Abinaya\Desktop\talentX.WebScrap\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\obj\Debug\net6.0\refint\talentX.WebScrapper.Allabolog.Entities.dll
 C:\Users\Abinaya\Desktop\talentX.WebScrap\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\obj\Debug\net6.0\talentX.WebScrapper.Allabolog.Entities.pdb
 C:\Users\Abinaya\Desktop\talentX.WebScrap\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\obj\Debug\net6.0\ref\talentX.WebScrapper.Allabolog.Entities.dll
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\bin\Debug\net6.0\talentX.WebScrapper.Allabolog.Entities.deps.json
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\bin\Debug\net6.0\talentX.WebScrapper.Allabolog.Entities.dll
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\bin\Debug\net6.0\talentX.WebScrapper.Allabolog.Entities.pdb
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\obj\Debug\net6.0\talentX.WebScrapper.Allabolog.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\obj\Debug\net6.0\talentX.WebScrapper.Allabolog.Entities.AssemblyInfoInputs.cache
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\obj\Debug\net6.0\talentX.WebScrapper.Allabolog.Entities.AssemblyInfo.cs
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\obj\Debug\net6.0\talentX.WebScrapper.Allabolog.Entities.csproj.CoreCompileInputs.cache
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\obj\Debug\net6.0\talentX.WebScrapper.Allabolog.Entities.dll
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\obj\Debug\net6.0\refint\talentX.WebScrapper.Allabolog.Entities.dll
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\obj\Debug\net6.0\talentX.WebScrapper.Allabolog.Entities.pdb
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Entities\obj\Debug\net6.0\ref\talentX.WebScrapper.Allabolog.Entities.dll

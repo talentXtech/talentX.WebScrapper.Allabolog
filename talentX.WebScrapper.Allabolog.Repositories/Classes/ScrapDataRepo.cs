@@ -33,7 +33,16 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
         {
             try
             {
-                await _context.InitialScrapOutputData.AddRangeAsync(outputDatas);
+                var list = new List<InitialScrapOutputData>();
+                foreach (var data in outputDatas)
+                {
+                    if (!_context.InitialScrapOutputData.Any(x => x.Url == data.Url))
+                    {
+                        list.Add(data);
+                    }
+                }
+
+                await _context.InitialScrapOutputData.AddRangeAsync(list);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -86,12 +95,22 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
 
         }
 
-        public async Task<List<DetailedScrapOutputData>> FindAllDetailedScrapDataAsync()
+        public async Task<List<DetailedScrapOutputData>> FindAllDetailedScrapDataAsync(string? filterInput = null)
         {
             try
             {
-                var list = _context.DetailedScrapOutputData.ToList();
-                return list;
+                if(filterInput == null)
+                {
+                    var list = _context.DetailedScrapOutputData.ToList();
+                    return list;
+                }
+                else
+                {
+                    var list = _context.DetailedScrapOutputData.Where(x => x.SearchFieldText == filterInput).ToList();
+                    return list;
+                }
+               
+
             }
             catch (Exception ex)
             {
