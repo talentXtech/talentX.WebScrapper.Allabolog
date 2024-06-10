@@ -98,6 +98,13 @@ namespace talentX.WebScrapper.Allabolog.Extensions
             return text;
         }
 
+        public static string FindElementTextFromParentByXpath(this IWebElement parentElement, string xpath)
+        {
+            var element = parentElement.FindElement(By.XPath(xpath));
+            var text = element.Text;
+            return text;
+        }
+
         // element with child elements
         public static string FindElementTextBySelectorWithChildDivElement(this IWebElement parentElement, string selector)
         {
@@ -121,6 +128,12 @@ namespace talentX.WebScrapper.Allabolog.Extensions
         public static IWebElement FindElementById(this ChromeDriver driver, string id)
         {
             var element = driver.FindElement(By.Id(id));
+            return element;
+        }
+
+        public static IWebElement FindElementByTag(this IWebElement parentElement, string tag)
+        {
+            var element = parentElement.FindElement(By.TagName(tag));
             return element;
         }
 

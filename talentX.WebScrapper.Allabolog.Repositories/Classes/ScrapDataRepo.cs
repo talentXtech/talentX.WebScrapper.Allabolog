@@ -39,6 +39,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
                     if (!_context.InitialScrapOutputData.Any(x => x.Url == data.Url))
                     {
                         list.Add(data);
+
                     }
                 }
 
@@ -138,6 +139,18 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+
+        public async Task<List<string>> GetFiltersBySearchInputFieldAsync()
+        {
+          var searchInputFilter = await  _context.DetailedScrapOutputData.Select(p => p.SearchFieldText).Distinct().ToListAsync();
+            return searchInputFilter;
+        }
+
+        public async Task<List<string>> GetFiltersByCategory()
+        {
+            var categories = await _context.DetailedScrapOutputData.Select(p => p.Verksamhet).Distinct().ToListAsync();
+            return categories;
         }
     }
 }
