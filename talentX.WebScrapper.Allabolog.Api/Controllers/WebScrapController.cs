@@ -130,7 +130,13 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
         {
             try
             {
-                var data = await _scrapDataRepo.FindAllDetailedScrapDataAsync(filterInput);
+                List<DetailedScrapOutputData> data = new();
+
+                if (filterInput == null)
+                {
+                    data = await _scrapDataRepo.FindAllDetailedScrapDataAsync();
+                }
+                data = await _scrapDataRepo.FilterDetailedScrapDataBySearchInputAsync(filterInput);
 
                 using (var memoryStream = new MemoryStream())
                 {
@@ -194,6 +200,49 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                     isSuccess = true
                 };
                 return Ok(apiResponse);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                var apiResponse = new ApiResponseDto<string>
+                {
+                    Data = ex.Message,
+                    isSuccess = false
+                };
+                return BadRequest(apiResponse);
+
+            }
+        }
+
+        [HttpDelete("DeleteDetailedScrapOutputDataByCategory")]
+        public async Task<IActionResult> DeleteDetailedScrapOutputDataByCategory(string input)
+        {
+            try
+            {
+                var list = await _scrapDataRepo.FilterDetailedScrapDataByCategoryAsync(input);
+
+                ApiResponseDto<string> apiResponse = new();
+                if (list.Count == 0)
+                {
+                    apiResponse = new ApiResponseDto<string>
+                    {
+                        Data = "No data available in that Category",
+                        isSuccess = true
+                    };
+                    return Ok(apiResponse);
+                }
+                else
+                {
+                    await _scrapDataRepo.DeleteDetailedScrapOutputDataByCategory(input);
+                    apiResponse = new ApiResponseDto<string>
+                    {
+                        Data = "Data Deleted Successfully!",
+                        isSuccess = true
+                    };
+                    return Ok(apiResponse);
+
+                }
+                
             }
             catch (Exception ex)
             {

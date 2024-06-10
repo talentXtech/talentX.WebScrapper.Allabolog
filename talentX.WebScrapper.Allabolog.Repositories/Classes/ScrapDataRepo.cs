@@ -81,6 +81,22 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
         }
 
+        public async Task DeleteDetailedScrapOutputDataByCategory(string input)
+        {
+            try
+            {
+                var list = _context.DetailedScrapOutputData.Where(x => x.Verksamhet == input);
+                _context.DetailedScrapOutputData.RemoveRange(list);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+        }
+
         public async Task DeleteInitialScrapDataAsync()
         {
             try
@@ -96,22 +112,42 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
 
         }
 
-        public async Task<List<DetailedScrapOutputData>> FindAllDetailedScrapDataAsync(string? filterInput = null)
+        public async Task<List<DetailedScrapOutputData>> FindAllDetailedScrapDataAsync()
         {
             try
             {
-                if(filterInput == null)
-                {
                     var list = _context.DetailedScrapOutputData.ToList();
                     return list;
-                }
-                else
-                {
+        
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        public async Task<List<DetailedScrapOutputData>> FilterDetailedScrapDataBySearchInputAsync(string filterInput )
+        {
+            try
+            {
+                   
                     var list = _context.DetailedScrapOutputData.Where(x => x.SearchFieldText == filterInput).ToList();
                     return list;
-                }
-               
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
 
+        public async Task<List<DetailedScrapOutputData>> FilterDetailedScrapDataByCategoryAsync(string filterInput)
+        {
+            try
+            {
+                var list = _context.DetailedScrapOutputData.Where(x => x.Verksamhet == filterInput).ToList();
+                return list;
             }
             catch (Exception ex)
             {
