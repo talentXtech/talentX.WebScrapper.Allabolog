@@ -85,7 +85,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
         {
             try
             {
-                var list = _context.DetailedScrapOutputData.Where(x => x.Verksamhet == input);
+                var list = _context.DetailedScrapOutputData.Where(x => x.Verksamhet.Contains(input));
                 _context.DetailedScrapOutputData.RemoveRange(list);
                 await _context.SaveChangesAsync();
             }
@@ -97,12 +97,46 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
 
         }
 
+        public async Task DeleteInitialScrapOutputDataByCategory(string input)
+        {
+            try
+            {
+                var list = _context.InitialScrapOutputData.Where(x => x.Verksamhet.Contains(input));
+                _context.InitialScrapOutputData.RemoveRange(list);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+        }
+
+
+
         public async Task DeleteDetailedScrapOutputDataBySearchinput(string input)
         {
             try
             {
                 var list = _context.DetailedScrapOutputData.Where(x => x.SearchFieldText == input);
                 _context.DetailedScrapOutputData.RemoveRange(list);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+        }
+
+        public async Task DeleteInitialScrapOutputDataBySearchinput(string input)
+        {
+            try
+            {
+                var list = _context.InitialScrapOutputData.Where(x => x.SearchFieldText == input);
+                _context.InitialScrapOutputData.RemoveRange(list);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)

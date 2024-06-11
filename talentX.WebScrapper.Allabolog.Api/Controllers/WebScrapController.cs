@@ -226,6 +226,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             try
             {
                 var list = await _scrapDataRepo.FilterDetailedScrapDataByCategoryAsync(input);
+                var initialScrapDataList = await _scrapDataRepo.FilterInitialScrapDataByCategoryAsync(input);
 
                 ApiResponseDto<string> apiResponse = new();
                 if (list.Count == 0)
@@ -236,6 +237,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                 else
                 {
                     await _scrapDataRepo.DeleteDetailedScrapOutputDataByCategory(input);
+                    await _scrapDataRepo.DeleteInitialScrapOutputDataByCategory(input);
                     apiResponse = ResponseUtils.GetSuccesfulResponse("Data Deleted Successfully!");
 
                     return Ok(apiResponse);
@@ -258,6 +260,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             try
             {
                 var list = await _scrapDataRepo.FilterDetailedScrapDataBySearchInputAsync(input);
+                var initialScrapDataList = await _scrapDataRepo.FilterInitialScrapDataBySearchInputAsync(input);
 
                 ApiResponseDto<string> apiResponse = new();
                 if (list.Count == 0)
@@ -268,6 +271,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                 else
                 {
                     await _scrapDataRepo.DeleteDetailedScrapOutputDataBySearchinput(input);
+                    await _scrapDataRepo.DeleteInitialScrapOutputDataBySearchinput(input);
                     apiResponse = ResponseUtils.GetSuccesfulResponse("Data Deleted Successfully!");
                     return Ok(apiResponse);
 
