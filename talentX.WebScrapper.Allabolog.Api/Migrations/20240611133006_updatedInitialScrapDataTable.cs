@@ -4,20 +4,13 @@
 
 namespace talentX.WebScrapper.Allabolog.Api.Migrations
 {
-    public partial class updatedDetailedScrapOutput : Migration
+    public partial class updatedInitialScrapDataTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<DateTime>(
-                name: "DateOfSearch",
-                table: "DetailedScrapOutputData",
-                type: "datetime2",
-                nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
-
             migrationBuilder.AddColumn<string>(
                 name: "SearchFieldText",
-                table: "DetailedScrapOutputData",
+                table: "InitialScrapOutputData",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "");
@@ -26,12 +19,8 @@ namespace talentX.WebScrapper.Allabolog.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "DateOfSearch",
-                table: "DetailedScrapOutputData");
-
-            migrationBuilder.DropColumn(
                 name: "SearchFieldText",
-                table: "DetailedScrapOutputData");
+                table: "InitialScrapOutputData");
         }
     }
 }

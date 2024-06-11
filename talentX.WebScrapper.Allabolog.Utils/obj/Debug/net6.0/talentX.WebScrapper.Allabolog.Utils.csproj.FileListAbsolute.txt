@@ -43,3 +43,6 @@ C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Alla
 C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Utils\obj\Debug\net6.0\refint\talentX.WebScrapper.Allabolog.Utils.dll
 C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Utils\obj\Debug\net6.0\talentX.WebScrapper.Allabolog.Utils.pdb
 C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Utils\obj\Debug\net6.0\ref\talentX.WebScrapper.Allabolog.Utils.dll
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Utils\bin\Debug\net6.0\talentX.WebScrapper.Allabolog.Entities.dll
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Utils\bin\Debug\net6.0\talentX.WebScrapper.Allabolog.Entities.pdb
+C:\Users\Abinaya\Desktop\talentX_networkCurationProject\talentX.WebScrapper.Allabolog\talentX.WebScrapper.Allabolog.Utils\obj\Debug\net6.0\talentX.WebScrapper.Allabolog.Utils.csproj.CopyComplete

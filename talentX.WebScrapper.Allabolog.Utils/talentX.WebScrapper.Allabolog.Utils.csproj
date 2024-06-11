@@ -11,4 +11,8 @@
     <PackageReference Include="Selenium.WebDriver" Version="4.21.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\talentX.WebScrapper.Allabolog.Entities\talentX.WebScrapper.Allabolog.Entities.csproj" />
+  </ItemGroup>
+
 </Project>

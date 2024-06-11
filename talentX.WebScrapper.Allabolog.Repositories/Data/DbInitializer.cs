@@ -1,6 +1,4 @@
-﻿using talentX.WebScrapper.Allabolog.Entities;
-
-namespace talentX.WebScrapper.Allabolog.Repositories.Data
+﻿namespace talentX.WebScrapper.Allabolog.Repositories.Data
 {
     public class DbInitializer
     {

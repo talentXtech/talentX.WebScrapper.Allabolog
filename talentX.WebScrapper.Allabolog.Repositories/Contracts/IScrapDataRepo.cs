@@ -13,10 +13,14 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Contracts
         Task DeleteInitialScrapDataAsync();
 
         Task DeleteDetailedScrapOutputDataByCategory(string input);
+        Task DeleteDetailedScrapOutputDataBySearchinput(string input);
         Task<List<DetailedScrapOutputData>> FindAllDetailedScrapDataAsync();
 
         Task<List<DetailedScrapOutputData>> FilterDetailedScrapDataBySearchInputAsync(string filterInput);
         Task<List<DetailedScrapOutputData>> FilterDetailedScrapDataByCategoryAsync(string filterInput);
+
+        Task<List<InitialScrapOutputData>> FilterInitialScrapDataBySearchInputAsync(string filterInput);
+        Task<List<InitialScrapOutputData>> FilterInitialScrapDataByCategoryAsync(string filterInput);
 
         Task<List<InitialScrapOutputData>> ListOfurlsNotExistingInDb(List<InitialScrapOutputData> outputDatas);
 

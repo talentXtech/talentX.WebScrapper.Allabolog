@@ -97,6 +97,22 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
 
         }
 
+        public async Task DeleteDetailedScrapOutputDataBySearchinput(string input)
+        {
+            try
+            {
+                var list = _context.DetailedScrapOutputData.Where(x => x.SearchFieldText == input);
+                _context.DetailedScrapOutputData.RemoveRange(list);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+        }
+
         public async Task DeleteInitialScrapDataAsync()
         {
             try
@@ -146,7 +162,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
         {
             try
             {
-                var list = _context.DetailedScrapOutputData.Where(x => x.Verksamhet == filterInput).ToList();
+                var list = _context.DetailedScrapOutputData.Where(x => x.Verksamhet.Contains(filterInput)).ToList();
                 return list;
             }
             catch (Exception ex)
@@ -154,6 +170,36 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+
+       public async Task<List<InitialScrapOutputData>> FilterInitialScrapDataBySearchInputAsync(string filterInput)
+        {
+            try
+            {
+
+                var list = _context.InitialScrapOutputData.Where(x => x.SearchFieldText == filterInput).ToList();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+        }
+        public async Task<List<InitialScrapOutputData>> FilterInitialScrapDataByCategoryAsync(string filterInput)
+        {
+            try
+            {
+                var list = _context.InitialScrapOutputData.Where(x => x.Verksamhet.Contains(filterInput)).ToList();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
         }
         public async Task<List<InitialScrapOutputData>> ListOfurlsNotExistingInDb(List<InitialScrapOutputData> outputDatas)
         {

@@ -12,6 +12,7 @@ namespace talentX.WebScrapper.Allabolog.Entities
         public string? Title { get; set; }
         public string? Url { get; set; }
         public string Verksamhet { get; set; }
+        public string SearchFieldText { get; set; }
 
         public string? Remarks { get; set; }
     }

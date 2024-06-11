@@ -9,7 +9,8 @@
       "talentX.WebScrapper.Allabolog.Utils/1.0.0": {
         "dependencies": {
           "Selenium.Support": "4.21.0",
-          "Selenium.WebDriver": "4.21.0"
+          "Selenium.WebDriver": "4.21.0",
+          "talentX.WebScrapper.Allabolog.Entities": "1.0.0"
         },
         "runtime": {
           "talentX.WebScrapper.Allabolog.Utils.dll": {}
@@ -44,6 +45,11 @@
             "fileVersion": "4.0.0.0"
           }
         }
+      },
+      "talentX.WebScrapper.Allabolog.Entities/1.0.0": {
+        "runtime": {
+          "talentX.WebScrapper.Allabolog.Entities.dll": {}
+        }
       }
     }
   },
@@ -73,6 +79,11 @@
       "sha512": "sha512-3xIx4CJunIoLEOROfDKILIzf76WfphTpQJYE98stG1GBVBKhFO5E6wXNfCqdiWt34iNlckcDr3z+qCD+RPfuUQ==",
       "path": "selenium.webdriver/4.21.0",
       "hashPath": "selenium.webdriver.4.21.0.nupkg.sha512"
+    },
+    "talentX.WebScrapper.Allabolog.Entities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

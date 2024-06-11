@@ -345,7 +345,11 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\Abinaya\\Desktop\\talentX_networkCurationProject\\talentX.WebScrapper.Allabolog\\talentX.WebScrapper.Allabolog.Entities\\talentX.WebScrapper.Allabolog.Entities.csproj": {
+                "projectPath": "C:\\Users\\Abinaya\\Desktop\\talentX_networkCurationProject\\talentX.WebScrapper.Allabolog\\talentX.WebScrapper.Allabolog.Entities\\talentX.WebScrapper.Allabolog.Entities.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
