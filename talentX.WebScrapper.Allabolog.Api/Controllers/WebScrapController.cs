@@ -98,19 +98,92 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
 
                 var listOfDataToGetDetailedScrapData = await _scrapDataRepo.ListOfurlsNotExistingInDb(initialScrappedData);
 
-                await ScrapingDetailedDataFromEachLink(listOfDataToGetDetailedScrapData, filterInput);
-                var apiResponse = ResponseUtils.GetSuccesfulResponse("Data scapped!");
+                await ScrapingDetailedDataFromEachLink(listOfDataToGetDetailedScrapData);
+                var apiResponse = ResponseUtils.GetSuccesfulResponse(initialScrappedData);
                 return Ok(apiResponse);
 
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                var apiResponse = ResponseUtils.GetBadRequestResponse(ex.Message);
+                var apiResponse = ResponseUtils.GetBadRequestResponse("Issues with Scrapping Data. Please try again later...");
                 return BadRequest(apiResponse);
 
             }
 
+        }
+
+        private async Task ScrapingDetailedDataFromEachLink(List<InitialScrapOutputData> initialScrappedData)
+        {
+            ChromeDriver newDriver = null;
+            foreach (var data in initialScrappedData)
+            {
+                newDriver = ChromeDriverUtils.CreateChromeDriverHeadless(data.Url);
+                ChromeDriverUtils.CloseComplainaceOverlay(newDriver);
+                try
+                {
+
+                    Thread.Sleep(5000);
+                    var orgnr = newDriver.FindElementTextByClass("orgnr");
+                    var ceo = newDriver.FindElementTextByXPath("//*[@id=\"company-card_overview\"]/div[3]/div[1]/dl/dd[1]/a");
+                    var address = newDriver.FindElementTextByXPath("//*[@id=\"company-card_overview\"]/div[3]/div[2]/dl/dd[2]/a[1]");
+                    var location = newDriver.FindElementTextByXPath("//*[@id=\"company-card_overview\"]/div[3]/div[2]/dl/dd[3]");
+                    var yearFounded = newDriver.FindElementTextByXPath("//*[@id=\"company-card_overview\"]/div[3]/div[1]/dl/dd[5]");
+                    var revenue = newDriver.FindElementTextByXPath("//*[@id=\"company-card_overview\"]/div[2]/div[2]/div[1]/table/tbody/tr[1]/td[1]");
+                    string urlForEmployeeDetails = MiscUtils.GetUrl(orgnr);
+
+                    newDriver.Navigate().GoToUrl(urlForEmployeeDetails);
+
+                    var employees = newDriver.FindAllByClass("tw-text-allabolag-600");
+                    var employeeNames = string.Join('|', employees.Select((x) => x.Text).ToArray());
+
+
+                    var companyDetail = new DetailedScrapOutputData
+                    {
+                        CompanyName = data.Title,
+                        SearchFieldText = data.SearchFieldText,
+                        Verksamhet = data.Verksamhet,
+                        Remarks = data.Remarks,
+                        DateOfSearch = DateTime.Now,
+                        AllabolagUrl = data.Url,
+                        OrgNo = orgnr,
+                        CEO = ceo,
+                        Address = address,
+                        Location = location,
+                        YearOfEstablishment = yearFounded,
+                        Revenue = revenue,
+                        EmployeeNames = employeeNames
+
+                    };
+                    await _scrapDataRepo.AddDetailedScrapDataAsync(companyDetail);
+
+
+                }
+                catch (Exception ex)
+                {
+                    var companyDetail = new DetailedScrapOutputData
+                    {
+                        CompanyName = data.Title,
+                        SearchFieldText = data.SearchFieldText,
+                        Verksamhet = data.Verksamhet,
+                        Remarks = data.Remarks,
+                        DateOfSearch = DateTime.Now,
+                        AllabolagUrl = data.Url,
+                        OrgNo = "Issue with getting data",
+                        CEO = "Issue with getting data",
+                        Address = "Issue with getting data",
+                        Location = "Issue with getting data",
+                        YearOfEstablishment = "Issue with getting data",
+                        Revenue = "Issue with getting data",
+                        EmployeeNames = "Issue with getting data"
+                    };
+                    await _scrapDataRepo.AddDetailedScrapDataAsync(companyDetail);
+                    Console.WriteLine(ex.Message);
+                    throw;
+                }
+                newDriver.Quit();
+
+            }
         }
 
 
@@ -325,78 +398,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
 
         }
 
-        private async Task ScrapingDetailedDataFromEachLink(List<InitialScrapOutputData> finalScrappedDatas, string filterInput)
-        {
-            ChromeDriver newDriver = null;
-            foreach (var data in finalScrappedDatas)
-            {
-                newDriver = ChromeDriverUtils.CreateChromeDriverHeadless(data.Url);
-                ChromeDriverUtils.CloseComplainaceOverlay(newDriver);
-                try
-                {
-
-                    Thread.Sleep(5000);
-                    var orgnr = newDriver.FindElementTextByClass("orgnr");
-                    var ceo = newDriver.FindElementTextByXPath("//*[@id=\"company-card_overview\"]/div[3]/div[1]/dl/dd[1]/a");
-                    var address = newDriver.FindElementTextByXPath("//*[@id=\"company-card_overview\"]/div[3]/div[2]/dl/dd[2]/a[1]");
-                    var location = newDriver.FindElementTextByXPath("//*[@id=\"company-card_overview\"]/div[3]/div[2]/dl/dd[3]");
-                    var yearFounded = newDriver.FindElementTextByXPath("//*[@id=\"company-card_overview\"]/div[3]/div[1]/dl/dd[5]");
-                    var revenue = newDriver.FindElementTextByXPath("//*[@id=\"company-card_overview\"]/div[2]/div[2]/div[1]/table/tbody/tr[1]/td[1]");
-                    string urlForEmployeeDetails = MiscUtils.GetUrl(orgnr);
-
-                    newDriver.Navigate().GoToUrl(urlForEmployeeDetails);
-
-                    var employees = newDriver.FindAllByClass("tw-text-allabolag-600");
-                    var employeeNames = string.Join('|', employees.Select((x) => x.Text).ToArray());
-
-
-                    var companyDetail = new DetailedScrapOutputData
-                    {
-                        CompanyName = data.Title,
-                        SearchFieldText = data.SearchFieldText,
-                        Verksamhet = data.Verksamhet,
-                        Remarks = data.Remarks,
-                        DateOfSearch = DateTime.Now,
-                        AllabolagUrl = data.Url,
-                        OrgNo = orgnr,
-                        CEO = ceo,
-                        Address = address,
-                        Location = location,
-                        YearOfEstablishment = yearFounded,
-                        Revenue = revenue,
-                        EmployeeNames = employeeNames
-
-                    };
-                    await _scrapDataRepo.AddDetailedScrapDataAsync(companyDetail);
-
-
-                }
-                catch (Exception ex)
-                {
-                    var companyDetail = new DetailedScrapOutputData
-                    {
-                        CompanyName = data.Title,
-                        SearchFieldText = data.SearchFieldText,
-                        Verksamhet = data.Verksamhet,
-                        Remarks = data.Remarks,
-                        DateOfSearch = DateTime.Now,
-                        AllabolagUrl = data.Url,
-                        OrgNo = "Issue with getting data",
-                        CEO = "Issue with getting data",
-                        Address = "Issue with getting data",
-                        Location = "Issue with getting data",
-                        YearOfEstablishment = "Issue with getting data",
-                        Revenue = "Issue with getting data",
-                        EmployeeNames = "Issue with getting data"
-                    };
-                    await _scrapDataRepo.AddDetailedScrapDataAsync(companyDetail);
-                    Console.WriteLine(ex.Message);
-                    throw;
-                }
-                newDriver.Quit();
-
-            }
-        }
+        
 
         private IActionResult GenerateCsv(string? filterInput, List<DetailedScrapOutputData> data)
         {
