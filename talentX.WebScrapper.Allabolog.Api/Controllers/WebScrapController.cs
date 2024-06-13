@@ -25,6 +25,10 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ScrapInfo(string filterInput)
         {
+            int noOfDataToBeScrapped = 0;
+            int noOfDataSuccessfullyScrapped = 0;
+            int dataScrapped = 0;
+
             try
             {
                 var driver = ChromeDriverUtils.CreateChromeDriverHeadless("https://www.allabolag.se/");
@@ -50,6 +54,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                 var parentElementForTittle = driver.FindElementByClass("page__main");
                 var allTitles = parentElementForTittle.FindAllByTag("a");
                 var allArticles = parentElementForTittle.FindAllByTag("article");
+      
 
                 var scrappedData = new List<InitialScrapOutputData>();
 
@@ -97,9 +102,9 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                 await _scrapDataRepo.AddRangeInitialScrapDataAsync(initialScrappedData);
 
                 var listOfDataToGetDetailedScrapData = await _scrapDataRepo.ListOfurlsNotExistingInDb(initialScrappedData);
-
-                await ScrapingDetailedDataFromEachLink(listOfDataToGetDetailedScrapData);
-                var apiResponse = ResponseUtils.GetSuccesfulResponse(initialScrappedData);
+                dataScrapped = await ScrapingDetailedDataFromEachLink(listOfDataToGetDetailedScrapData, noOfDataSuccessfullyScrapped);
+                noOfDataToBeScrapped = listOfDataToGetDetailedScrapData.Count();
+                var apiResponse = ResponseUtils.GetSuccesfulResponse("Data Scrapped scuccesfully and is ready for download!");
                 return Ok(apiResponse);
 
             }
@@ -108,18 +113,26 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                 Console.WriteLine(ex.Message);
                 var apiResponse = ResponseUtils.GetBadRequestResponse("Issues with Scrapping Data. Please try again later...");
                 return BadRequest(apiResponse);
+            }
+            finally
+            {
+                Console.WriteLine("Data scrapped"+ dataScrapped);
+                Console.WriteLine("Data to be scrapped" +noOfDataToBeScrapped);
+                var responseMessage = dataScrapped + "/" + noOfDataToBeScrapped + "data scrapped successfully. Please try again for the rest!";
 
+              //  return Ok(apiResponse);
             }
 
         }
 
-        private async Task ScrapingDetailedDataFromEachLink(List<InitialScrapOutputData> initialScrappedData)
+        private async Task<int> ScrapingDetailedDataFromEachLink(List<InitialScrapOutputData> initialScrappedData, int noOfDataSuccessfullyScrapped)
         {
             ChromeDriver newDriver = null;
             foreach (var data in initialScrappedData)
             {
                 newDriver = ChromeDriverUtils.CreateChromeDriverHeadless(data.Url);
                 ChromeDriverUtils.CloseComplainaceOverlay(newDriver);
+                
                 try
                 {
 
@@ -156,34 +169,21 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
 
                     };
                     await _scrapDataRepo.AddDetailedScrapDataAsync(companyDetail);
+                    noOfDataSuccessfullyScrapped = noOfDataSuccessfullyScrapped + 1;
 
 
                 }
                 catch (Exception ex)
                 {
-                    var companyDetail = new DetailedScrapOutputData
-                    {
-                        CompanyName = data.Title,
-                        SearchFieldText = data.SearchFieldText,
-                        Verksamhet = data.Verksamhet,
-                        Remarks = data.Remarks,
-                        DateOfSearch = DateTime.Now,
-                        AllabolagUrl = data.Url,
-                        OrgNo = "Issue with getting data",
-                        CEO = "Issue with getting data",
-                        Address = "Issue with getting data",
-                        Location = "Issue with getting data",
-                        YearOfEstablishment = "Issue with getting data",
-                        Revenue = "Issue with getting data",
-                        EmployeeNames = "Issue with getting data"
-                    };
-                    await _scrapDataRepo.AddDetailedScrapDataAsync(companyDetail);
-                    Console.WriteLine(ex.Message);
                     throw;
                 }
-                newDriver.Quit();
-
+                finally
+                {
+                    newDriver.Quit();
+                   
+                }
             }
+            return noOfDataSuccessfullyScrapped;
         }
 
 
@@ -294,12 +294,12 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
         }
 
         [HttpDelete("DeleteDetailedScrapOutputDataByCategory")]
-        public async Task<IActionResult> DeleteDetailedScrapOutputDataByCategory(string input)
+        public async Task<IActionResult> DeleteDetailedScrapOutputDataByCategory(string filterInput)
         {
             try
             {
-                var list = await _scrapDataRepo.FilterDetailedScrapDataByCategoryAsync(input);
-                var initialScrapDataList = await _scrapDataRepo.FilterInitialScrapDataByCategoryAsync(input);
+                var list = await _scrapDataRepo.FilterDetailedScrapDataByCategoryAsync(filterInput);
+                var initialScrapDataList = await _scrapDataRepo.FilterInitialScrapDataByCategoryAsync(filterInput);
 
                 ApiResponseDto<string> apiResponse = new();
                 if (list.Count == 0)
@@ -309,8 +309,8 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                 }
                 else
                 {
-                    await _scrapDataRepo.DeleteDetailedScrapOutputDataByCategory(input);
-                    await _scrapDataRepo.DeleteInitialScrapOutputDataByCategory(input);
+                    await _scrapDataRepo.DeleteDetailedScrapOutputDataByCategory(filterInput);
+                    await _scrapDataRepo.DeleteInitialScrapOutputDataByCategory(filterInput);
                     apiResponse = ResponseUtils.GetSuccesfulResponse("Data Deleted Successfully!");
 
                     return Ok(apiResponse);
@@ -328,12 +328,12 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
         }
 
         [HttpDelete("DeleteDetailedScrapOutputDataBySearchFilterInput")]
-        public async Task<IActionResult> DeleteDetailedScrapOutputDataBySearchFilterInput(string input)
+        public async Task<IActionResult> DeleteDetailedScrapOutputDataBySearchFilterInput(string filterInput)
         {
             try
             {
-                var list = await _scrapDataRepo.FilterDetailedScrapDataBySearchInputAsync(input);
-                var initialScrapDataList = await _scrapDataRepo.FilterInitialScrapDataBySearchInputAsync(input);
+                var list = await _scrapDataRepo.FilterDetailedScrapDataBySearchInputAsync(filterInput);
+                var initialScrapDataList = await _scrapDataRepo.FilterInitialScrapDataBySearchInputAsync(filterInput);
 
                 ApiResponseDto<string> apiResponse = new();
                 if (list.Count == 0)
@@ -343,8 +343,8 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                 }
                 else
                 {
-                    await _scrapDataRepo.DeleteDetailedScrapOutputDataBySearchinput(input);
-                    await _scrapDataRepo.DeleteInitialScrapOutputDataBySearchinput(input);
+                    await _scrapDataRepo.DeleteDetailedScrapOutputDataBySearchinput(filterInput);
+                    await _scrapDataRepo.DeleteInitialScrapOutputDataBySearchinput(filterInput);
                     apiResponse = ResponseUtils.GetSuccesfulResponse("Data Deleted Successfully!");
                     return Ok(apiResponse);
 
