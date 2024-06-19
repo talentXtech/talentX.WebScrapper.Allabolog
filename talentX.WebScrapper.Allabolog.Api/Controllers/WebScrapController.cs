@@ -21,12 +21,11 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
         }
 
 
-        [HttpGet("ScrapInfo")]
+        [HttpPost("ScrapInfo")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ScrapInfo(string filterInput)
         {
             int noOfDataToBeScrapped = 0;
-            int noOfDataSuccessfullyScrapped = 0;
             int dataScrapped = 0;
 
             try
@@ -102,7 +101,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                 await _scrapDataRepo.AddRangeInitialScrapDataAsync(initialScrappedData);
 
                 var listOfDataToGetDetailedScrapData = await _scrapDataRepo.ListOfurlsNotExistingInDb(initialScrappedData);
-                dataScrapped = await ScrapingDetailedDataFromEachLink(listOfDataToGetDetailedScrapData, noOfDataSuccessfullyScrapped);
+                dataScrapped = await ScrapingDetailedDataFromEachLink(listOfDataToGetDetailedScrapData);
                 noOfDataToBeScrapped = listOfDataToGetDetailedScrapData.Count();
                 var apiResponse = ResponseUtils.GetSuccesfulResponse("Data Scrapped scuccesfully and is ready for download!");
                 return Ok(apiResponse);
@@ -111,22 +110,15 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
-                var apiResponse = ResponseUtils.GetBadRequestResponse("Issues with Scrapping Data. Please try again later...");
+                var responseMessage = dataScrapped + "/" + noOfDataToBeScrapped + "data scrapped successfully.Issues with Scrapping Data. Please try again for the rest!";
+                var apiResponse = ResponseUtils.GetBadRequestResponse(responseMessage);
                 return BadRequest(apiResponse);
             }
-            finally
-            {
-                Console.WriteLine("Data scrapped"+ dataScrapped);
-                Console.WriteLine("Data to be scrapped" +noOfDataToBeScrapped);
-                var responseMessage = dataScrapped + "/" + noOfDataToBeScrapped + "data scrapped successfully. Please try again for the rest!";
-
-              //  return Ok(apiResponse);
-            }
-
         }
 
-        private async Task<int> ScrapingDetailedDataFromEachLink(List<InitialScrapOutputData> initialScrappedData, int noOfDataSuccessfullyScrapped)
+        private async Task<int> ScrapingDetailedDataFromEachLink(List<InitialScrapOutputData> initialScrappedData)
         {
+            int noOfDataSuccessfullyScrapped = 0;
             ChromeDriver newDriver = null;
             foreach (var data in initialScrappedData)
             {
@@ -257,29 +249,13 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             
         }
 
-        [HttpDelete("DeleteInitialScrapOutputData")]
-        public async Task<IActionResult> DeleteInitialScrapOutputData()
+
+        [HttpDelete("DeleteAllScrapOutputData")]
+        public async Task<IActionResult> DeleteAllScrapOutputData()
         {
             try
             {
                 await _scrapDataRepo.DeleteInitialScrapDataAsync();
-                var apiResponse = ResponseUtils.GetSuccesfulResponse("Data Deleted Successfully!");
-                return Ok(apiResponse);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                var apiResponse = ResponseUtils.GetBadRequestResponse(ex.Message); 
-                return BadRequest(apiResponse);
-
-            }
-        }
-
-        [HttpDelete("DeleteDetailedScrapOutputData")]
-        public async Task<IActionResult> DeleteDetailedScrapOutputData()
-        {
-            try
-            {
                 await _scrapDataRepo.DeleteDetailedScrapDataAsync();
                 var apiResponse = ResponseUtils.GetSuccesfulResponse("Data Deleted Successfully!");
                 return Ok(apiResponse);
@@ -293,8 +269,8 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             }
         }
 
-        [HttpDelete("DeleteDetailedScrapOutputDataByCategory")]
-        public async Task<IActionResult> DeleteDetailedScrapOutputDataByCategory(string filterInput)
+        [HttpDelete("DeleteScrapOutputDataByCategory")]
+        public async Task<IActionResult> DeleteScrapOutputDataByCategory(string filterInput)
         {
             try
             {
@@ -327,8 +303,8 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             }
         }
 
-        [HttpDelete("DeleteDetailedScrapOutputDataBySearchFilterInput")]
-        public async Task<IActionResult> DeleteDetailedScrapOutputDataBySearchFilterInput(string filterInput)
+        [HttpDelete("DeleteScrapOutputDataBySearchFilterInput")]
+        public async Task<IActionResult> DeleteScrapOutputDataBySearchFilterInput(string filterInput)
         {
             try
             {
