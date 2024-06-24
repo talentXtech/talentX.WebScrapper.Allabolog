@@ -14,10 +14,12 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
     public class WebScrapController : ControllerBase
     {
         private readonly IScrapDataRepo _scrapDataRepo;
+        private readonly ILogger<WebScrapController> _logger;
 
-        public WebScrapController(IScrapDataRepo scrapDataRepo)
+        public WebScrapController(IScrapDataRepo scrapDataRepo, ILogger<WebScrapController> logger)
         {
             _scrapDataRepo = scrapDataRepo;
+            _logger = logger;
         }
 
 
@@ -109,7 +111,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message, ex);
                 var responseMessage = dataScrapped + "/" + noOfDataToBeScrapped + "data scrapped successfully.Issues with Scrapping Data. Please try again for the rest!";
                 var apiResponse = ResponseUtils.GetBadRequestResponse(responseMessage);
                 return BadRequest(apiResponse);
@@ -167,6 +169,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex.Message, ex);
                     throw;
                 }
                 finally
@@ -192,7 +195,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message, ex);
                 var apiResponse = ResponseUtils.GetBadRequestResponse(ex.Message);
                 return BadRequest(apiResponse);
             }
@@ -216,7 +219,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message, ex);
                 var apiResponse = ResponseUtils.GetBadRequestResponse(ex.Message);
                 return BadRequest(apiResponse);
 
@@ -240,7 +243,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message, ex);
                 var apiResponse = ResponseUtils.GetBadRequestResponse(ex.Message);
                 return BadRequest(apiResponse);
 
@@ -262,7 +265,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message, ex);
                 var apiResponse = ResponseUtils.GetBadRequestResponse(ex.Message);
                 return BadRequest(apiResponse);
 
@@ -296,7 +299,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message, ex);
                 var apiResponse = ResponseUtils.GetBadRequestResponse(ex.Message);
                 return BadRequest(apiResponse);
 
@@ -329,7 +332,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message, ex);
                 var apiResponse = ResponseUtils.GetBadRequestResponse(ex.Message);
                 return BadRequest(apiResponse);
 
@@ -346,7 +349,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                 return Ok(apiResponse);
             }catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message, ex);
                 var apiResponse = ResponseUtils.GetBadRequestResponse(ex.Message);
                 return BadRequest(apiResponse);
 
@@ -366,7 +369,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message, ex);
                 var apiResponse = ResponseUtils.GetBadRequestResponse(ex.Message);
                 return BadRequest(apiResponse);
 

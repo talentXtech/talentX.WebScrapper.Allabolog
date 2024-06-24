@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using talentX.WebScrapper.Allabolog.Entities;
 using talentX.WebScrapper.Allabolog.Repositories.Contracts;
 using talentX.WebScrapper.Allabolog.Repositories.Data;
@@ -9,10 +10,12 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
     {
 
         private readonly DataContext _context;
+        private readonly ILogger<ScrapDataRepo> _logger;
 
-        public ScrapDataRepo(DataContext context)
+        public ScrapDataRepo(DataContext context, ILogger<ScrapDataRepo> logger)
         {
             _context = context;
+            _logger = logger;
 
         }
         public async Task AddInitialScrapDataAsync(InitialScrapOutputData outputData)
@@ -24,7 +27,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
         }
@@ -48,7 +51,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
         }
@@ -62,7 +65,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
         }
@@ -76,7 +79,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
         }
@@ -91,7 +94,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
 
@@ -107,7 +110,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
 
@@ -125,7 +128,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
 
@@ -141,7 +144,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
 
@@ -156,7 +159,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
 
@@ -172,7 +175,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
         }
@@ -187,7 +190,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
         }
@@ -201,7 +204,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
         }
@@ -216,7 +219,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
 
@@ -230,7 +233,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
 
@@ -252,7 +255,7 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Classes
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex, ex.Message);
                 throw;
             }
         }

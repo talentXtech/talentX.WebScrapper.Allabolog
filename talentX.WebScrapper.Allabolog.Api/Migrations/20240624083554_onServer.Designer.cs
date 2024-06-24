@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using talentX.WebScrapper.Allabolog.Repositories.Data;
 
@@ -11,13 +12,13 @@ using talentX.WebScrapper.Allabolog.Repositories.Data;
 namespace talentX.WebScrapper.Allabolog.Api.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240624083554_onServer")]
+    partial class onServer
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("Allabolog")
                 .HasAnnotation("ProductVersion", "6.0.30")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -83,7 +84,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DetailedScrapOutputData", "Allabolog");
+                    b.ToTable("DetailedScrapOutputData");
                 });
 
             modelBuilder.Entity("talentX.WebScrapper.Allabolog.Entities.InitialScrapOutputData", b =>
@@ -113,7 +114,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InitialScrapOutputData", "Allabolog");
+                    b.ToTable("InitialScrapOutputData");
                 });
 #pragma warning restore 612, 618
         }
