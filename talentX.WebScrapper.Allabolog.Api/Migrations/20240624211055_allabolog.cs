@@ -1,19 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace talentX.WebScrapper.Allabolog.Api.Migrations
 {
-    public partial class Initial : Migration
+    public partial class allabolog : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "allabolog");
+
             migrationBuilder.CreateTable(
                 name: "DetailedScrapOutputData",
+                schema: "allabolog",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    SearchFieldText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Verksamhet = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfSearch = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CompanyName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AllabolagUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OrgNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -31,12 +40,16 @@ namespace talentX.WebScrapper.Allabolog.Api.Migrations
 
             migrationBuilder.CreateTable(
                 name: "InitialScrapOutputData",
+                schema: "allabolog",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Verksamhet = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SearchFieldText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Remarks = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -47,10 +60,12 @@ namespace talentX.WebScrapper.Allabolog.Api.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "DetailedScrapOutputData");
+                name: "DetailedScrapOutputData",
+                schema: "allabolog");
 
             migrationBuilder.DropTable(
-                name: "InitialScrapOutputData");
+                name: "InitialScrapOutputData",
+                schema: "allabolog");
         }
     }
 }

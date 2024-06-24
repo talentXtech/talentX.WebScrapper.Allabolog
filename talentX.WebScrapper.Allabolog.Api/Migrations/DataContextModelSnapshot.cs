@@ -17,7 +17,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("Allabolog")
+                .HasDefaultSchema("allabolog")
                 .HasAnnotation("ProductVersion", "6.0.30")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -83,7 +83,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DetailedScrapOutputData", "Allabolog");
+                    b.ToTable("DetailedScrapOutputData", "allabolog");
                 });
 
             modelBuilder.Entity("talentX.WebScrapper.Allabolog.Entities.InitialScrapOutputData", b =>
@@ -113,7 +113,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InitialScrapOutputData", "Allabolog");
+                    b.ToTable("InitialScrapOutputData", "allabolog");
                 });
 #pragma warning restore 612, 618
         }

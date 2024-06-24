@@ -12,13 +12,10 @@ namespace talentX.WebScrapper.Allabolog.Repositories.Data
         public DbSet<InitialScrapOutputData> InitialScrapOutputData { get; set; }
         public DbSet<DetailedScrapOutputData> DetailedScrapOutputData { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(builder);
-
-            //Configure default schema
-            builder.HasDefaultSchema("Allabolog");
+            modelBuilder.HasDefaultSchema("allabolog");
         }
-
+        protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlServer(x => x.MigrationsHistoryTable("__EFMigrationsHistory", "allabolog"));
     }
 }

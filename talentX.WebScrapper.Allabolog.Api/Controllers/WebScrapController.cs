@@ -74,7 +74,7 @@ namespace talentX.WebScrapper.Allabolog.Api.Controllers
                     {
                         category = null;
                     }
-                    Console.WriteLine(category);
+                   
 
                     string remarksText;
                     var remarks = article.FindAllByClass("remarks");
